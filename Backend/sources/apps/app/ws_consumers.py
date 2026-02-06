@@ -32,10 +32,10 @@ class TokenAuthMiddleware:
     async def __call__(self, scope, receive, send):
    
         headers = dict(scope['headers'])
-
+        cookie_header = headers.get(b"cookie", b"").decode("utf-8")
       
-        if(headers.get(b"cookie")):
-
+        if cookie_header:
+            cookies = cookie_header.split("; ")
             for cookie in cookies:
                 cookie = cookie.strip()  # Elimina espacios en blanco alrededor de la cookie
                 if '=' in cookie:
